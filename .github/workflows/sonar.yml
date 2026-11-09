@@ -24,8 +24,9 @@ jobs:
       - name: Build, testes e análise
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: >-
-          ./mvnw -B clean verify
-          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-          -Dsonar.organization=CHAVE_DA_ORGANIZACAO
-          -Dsonar.projectKey=CHAVE_DO_PROJETO
+        run: |
+          ./mvnw sonar:sonar \
+            -Dsonar.token=$SONAR_TOKEN \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.organization=jonasbernardino \
+            -Dsonar.projectKey=JonasBernardino_demo-sonar
