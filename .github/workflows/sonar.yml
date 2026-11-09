@@ -1,0 +1,31 @@
+name: Build e SonarCloud
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Build, testes e análise
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: >-
+          ./mvnw -B clean verify
+          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.organization=CHAVE_DA_ORGANIZACAO
+          -Dsonar.projectKey=CHAVE_DO_PROJETO
