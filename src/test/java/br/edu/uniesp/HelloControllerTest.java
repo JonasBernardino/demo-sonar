@@ -18,4 +18,5 @@ class HelloControllerTest {
         mvc.perform(get("/api/hello"))
                 .andExpect(status().isOk());
     }
+
 }
