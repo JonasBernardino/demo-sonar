@@ -2,9 +2,9 @@ name: Build e SonarCloud
 
 on:
   push:
-    branches: [master]
+    branches: [main, master]
   pull_request:
-    branches: [master]
+    branches: [main, master]
 
 permissions:
   contents: read
@@ -30,7 +30,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ./mvnw -B clean verify sonar:sonar \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.organization=jonasbernardino \
-            -Dsonar.projectKey=JonasBernardino_demo-sonar
+          ./mvnw -B clean verify \
+          org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.organization=jonasbernardino \
+          -Dsonar.projectKey=JonasBernardino_demo-sonar
